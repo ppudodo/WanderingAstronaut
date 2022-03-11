@@ -30,20 +30,15 @@ public class Destroy : MonoBehaviour
         if (collision.gameObject.name.StartsWith("Ground"))
         {
 
-            if (Random.Range(1, 7) == 1)
-            {
+            
+            
 
                 Destroy(collision.gameObject);
-                Instantiate(platformPrefab, new Vector2(Random.Range(-3.5f, 3.5f), player.transform.position.y + (2 + Random.Range(0.2f, 1.0f))), Quaternion.identity);
+                Instantiate(platformPrefab, new Vector2(Random.Range(-4.5f, 4.5f), player.transform.position.y + (2 + Random.Range(0.1f, 1.7f))), Quaternion.identity);
 
 
-            }
-            else
-            {
-
-                collision.gameObject.transform.position = new Vector2(Random.Range(-3.5f, 3.5f), player.transform.position.y + (2 + Random.Range(0.2f, 1.0f)));
-
-            }
+            
+           
 
         }
         else if (collision.gameObject.name.StartsWith("Spring"))
@@ -52,14 +47,14 @@ public class Destroy : MonoBehaviour
             if (Random.Range(1, 7) == 1)
             {
 
-                collision.gameObject.transform.position = new Vector2(Random.Range(-4.5f, 4.5f), player.transform.position.y + (14 + Random.Range(0.2f, 1.0f)));
+                collision.gameObject.transform.position = new Vector2(Random.Range(-4.5f, 4.5f), player.transform.position.y + (4 + Random.Range(0.2f, 1.0f)));
 
             }
             else
             {
 
                 Destroy(collision.gameObject);
-                Instantiate(platformPrefab, new Vector2(Random.Range(-4.5f, 4.5f), player.transform.position.y + (14 + Random.Range(0.2f, 1.0f))), Quaternion.identity);
+                Instantiate(platformPrefab, new Vector2(Random.Range(-3.5f, 3.5f), player.transform.position.y + (4 + Random.Range(0.2f, 1.0f))), Quaternion.identity);
 
 
             }
