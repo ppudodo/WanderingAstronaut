@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
 
     
     public float jumpForce = 10f;
-    public bool grounded = false;
+    public bool grounded = true;
     private Rigidbody2D rg;
     void Start()
     {
@@ -16,22 +16,31 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
+        if (grounded==true)
+        {
+            rg.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+        }
+            
         
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-       
-        
-            rg.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-        
+
+
+        if (collision.collider.tag == "Ground")
+        {
+            grounded = true;
+        }
+
     }
     void OnCollisionExit2D(Collision2D col)
     {
         if (col.collider.tag == "Ground")
         {
-            grounded = true; 
+            grounded = false; 
         }
     }
 }
+
