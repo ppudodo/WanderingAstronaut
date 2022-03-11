@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
 
     
     public float jumpForce = 10f;
+    public float speed = 10f;
     public bool grounded = true;
     private Rigidbody2D rg;
     void Start()
@@ -18,12 +19,20 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+
+        Move();
         if (grounded==true)
         {
             rg.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
         }
             
         
+    }
+    public void Move() {
+
+        float x = Input.GetAxisRaw("Horizontal");
+        float moveBy = x * speed;
+        rg.velocity = new Vector2(moveBy, rg.velocity.y);
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
