@@ -6,50 +6,79 @@ public class PlayerMovement : MonoBehaviour
 {
     // Start is called before the first frame update
 
+
+    private Rigidbody2D rb2d;
+    private float moveInput;
+    private float speed = 10f;
+
+    private bool isStarted = false;
+
+    private float topScore = 0.0f;
+
     
-    public float jumpForce = 10f;
-    public float speed = 10f;
-    public bool grounded = true;
-    private Rigidbody2D rg;
+
+    // Start is called before the first frame update
     void Start()
     {
-        rg = GetComponent < Rigidbody2D >();
+
+        rb2d = GetComponent<Rigidbody2D>();
+
+        rb2d.gravityScale = 0;
+        rb2d.velocity = Vector3.zero;
+
     }
 
-    // Update is called once per frame
+    void Update()
+    {
+
+        if (Input.GetKeyDown(KeyCode.Space) && isStarted == false)
+        {
+
+            isStarted = true;
+            //startText.gameObject.SetActive(false);
+            rb2d.gravityScale = 2.3f;
+
+        }
+
+        if (isStarted == true)
+        {
+
+            if (moveInput < 0)
+            {
+
+                this.GetComponent<SpriteRenderer>().flipX = false;
+
+            }
+            else
+            {
+
+                this.GetComponent<SpriteRenderer>().flipX = true;
+
+            }
+
+            if (rb2d.velocity.y > 0 && transform.position.y > topScore)
+            {
+
+                topScore = transform.position.y;
+
+            }
+
+            //scoreText.text = "Score: " + Mathf.Round(topScore).ToString();
+        }
+
+    }
+
     void FixedUpdate()
     {
 
-        Move();
-        if (grounded==true)
+        if (isStarted == true)
         {
-            rg.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-        }
-            
-        
-    }
-    public void Move() {
 
-        float x = Input.GetAxisRaw("Horizontal");
-        float moveBy = x * speed;
-        rg.velocity = new Vector2(moveBy, rg.velocity.y);
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
+            moveInput = Input.GetAxis("Horizontal");
+            rb2d.velocity = new Vector2(moveInput * speed, rb2d.velocity.y);
 
-
-        if (collision.collider.tag == "Ground")
-        {
-            grounded = true;
         }
 
-    }
-    void OnCollisionExit2D(Collision2D col)
-    {
-        if (col.collider.tag == "Ground")
-        {
-            grounded = false; 
-        }
     }
 }
 
